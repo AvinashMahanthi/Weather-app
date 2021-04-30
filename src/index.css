@@ -67,7 +67,7 @@ main{
 
 .location-box .date {
   color: white;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 300;
   text-align: center;
   font-style: italic;
@@ -92,5 +92,31 @@ main{
   font-weight: 900;
 
   text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
+  text-align: center;
+  box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
 
+}
+
+.weather-box .weather{
+  color: white;
+  font-size: 48px;
+  font-weight: 700;
+  text-shadow: 3px rgba(50, 50, 70, 0.5);
+}
+
+.index-box .index{
+  color: #5DCFEF;
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 3px 3px rgba(53, 53, 75, 0.5);
+}
+
+.index-box .input-text {
+  color: white;
+  font-size: 25px;
+  font-weight: 300;
+  text-align: center;
+  font-style: italic;
+  text-shadow: 3px rgba(50, 50, 70, 0.5);
 }

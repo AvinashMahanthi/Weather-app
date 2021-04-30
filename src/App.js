@@ -1,47 +1,80 @@
 import "./App.css";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
+import logo from "./logo.svg";
 
 const api = {
   key: "46809d474ad542556436c5fa627a7f5b",
-  base: "https://api.openweathermap.org/data/2.5/weather",
+  base: "https://api.openweathermap.org/data/2.5/",
 };
 
-// function date() {
-//   const element = <span>{new Date().toLocaleDateString()}</span>;
-//   ReactDOM.render(element, document.getElementById("date"));
-// }
-
-// function time() {
-//   const element = <span>{new Date().toLocaleTimeString()}</span>;
-//   ReactDOM.render(element, document.getElementById("time"));
-// }
-// setInterval(date, 1000);
-// setInterval(time, 1000);
-
-let date = String(new window.Date());
-date = date.slice(3, 15);
-
 function App() {
+  const [query, setQuery] = useState("");
+  const [weather, setWeather] = useState({});
+
+  const search = (evt) => {
+    if (evt.key === "Enter") {
+      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setWeather(result);
+          setQuery("");
+          console.log(result);
+        });
+    }
+  };
+
+  let date = String(new window.Date());
+  date = date.slice(3, 15);
+
   return (
-    <div className="app warm">
+    <div
+      className={
+        typeof weather.main != "undefined"
+          ? weather.main.temp < 16
+            ? "app"
+            : "app warm"
+          : "app warm"
+      }
+    >
       <main>
         <div className="search-box">
-          <input type="text" className="search-bar" placeholder="Search..." />
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search..."
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+            onKeyPress={search}
+          />
         </div>
-        <div className="location-box">
-          <div className="location">Chennai City, India</div>
-          <div className="date">{date}</div>
-        </div>
-        <div className="weather-box">
-          <div className="temp">23*c</div>
-          <div className="weather">Sunny</div>
-        </div>
+        {typeof weather.main != "undefined" ? (
+          <div>
+            <div className="location-box">
+              <div className="location">
+                {weather.name}, {weather.sys.country}
+              </div>
+              <div className="date">{date}</div>
+            </div>
+            <div className="weather-box">
+              <div className="temp">{Math.round(weather.main.temp)}°C</div>
+              <div className="weather">{weather.weather[0].main}</div>
+            </div>
+          </div>
+        ) : (
+          <div className="index-box">
+            <div className="index">This is an React application</div>
+            <center>
+              <img src={logo} className="App-logo" alt="logo" />
+            </center>
+
+            <div className="input-text">
+              Please give the input in search bar
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
 }
 
 export default App;
-
-// const apiKey = "46809d474ad542556436c5fa627a7f5b";
-// const openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
